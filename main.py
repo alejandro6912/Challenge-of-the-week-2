@@ -1,4 +1,44 @@
 #MAIN
+# TOTAL INCOME CALCULATION
+# Sums all order totals
+# returns total
+def calculate_income(orders):
+    total = 0
+    for id_ord in orders:
+        total += orders[id_ord][3]
+    return total
+# FINAL REPORT
+# Checks if there are orders, processes each order,
+# counts orders per client and total products sold
+# returns report printing as the menu
+def generate_report(orders, clients, products):
+    if not orders:
+        return "No hay datos para generar reporte"
+    total_orders = len(orders)
+    total_income = calculate_income(orders)
+    orders_per_client = {}
+    products_sold = {}
+    for id_ord in orders:
+        id_cli, id_pro, quantity, _ = orders[id_ord]
+        if id_cli in orders_per_client:
+            orders_per_client[id_cli] += 1
+        else:
+            orders_per_client[id_cli] = 1
+        if id_pro in products_sold:
+            products_sold[id_pro] += quantity
+        else:
+            products_sold[id_pro] = quantity
+    # Build report
+    report = "\n###########\ REPORTE DEL DIA ###########\n"
+    report += f"Total pedidos: {total_orders}\n"
+    report += f"Total ingresos: {total_income}\n"
+    report += "\nPedidos por cliente:\n"
+    for id_cli in orders_per_client:
+        report += f"{clients[id_cli][0]}: {orders_per_client[id_cli]}\n"
+    report += "\nProductos vendidos\n"
+    for id_pro in products_sold:
+        report += f"{products[id_pro][1]}: {products_sold[id_pro]}\n"
+    return report
 
 # INTERACTIVE MENU
 def menu(user):
