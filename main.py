@@ -1,4 +1,39 @@
 #MAIN
+# ORDER CREATION
+# Checks if order ID exists, verifies client and product exist, validates quantity > 0
+# Gets product price, calculates total, stores order as (id_cli, id_pro, quantity, total)
+# returns orders and prints in the menu
+def create_order(orders, id_ord, id_cli, id_pro, quantity, clients, products):    
+    if id_ord in orders:
+        return orders, "Error: ID de pedido ya existe"
+    if id_cli not in clients:
+        return orders, "Error: Cliente no existe"
+    if id_pro not in products:
+        return orders, "Error: Producto no existe"
+    if quantity <= 0:
+        return orders, "Error: Cantidad inválida"
+    product = products[id_pro]
+    price = product[2]
+    total = price * quantity
+    orders[id_ord] = (id_cli, id_pro, quantity, total)
+    return orders, " Pedido creado correctamente"
+# ORDER QUERY
+# Checks if there are no orders, loops through orders, gets client and product names, builds output text   
+# returns result printing as the menu
+def view_orders(orders, clients, products):    
+    if not orders:
+        return "No hay pedidos registrados"
+    result = ""    
+    for id_ord in orders:
+        id_cli, id_pro, quantity, total = orders[id_ord]        
+        client_name = clients[id_cli][0]
+        product_name = products[id_pro][1]
+        result += f"\nPedido: {id_ord}\n"
+        result += f"Cliente: {client_name}\n"
+        result += f"Producto: {product_name}\n"
+        result += f"Cantidad: {quantity}\n"
+        result += f"Total: {total}\n"
+    return result
 # TOTAL INCOME CALCULATION
 # Sums all order totals
 # returns total
