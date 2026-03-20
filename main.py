@@ -1,4 +1,20 @@
-#MAIN
+#MAIN PROGRAM
+# CLIENT REGISTRATION
+# Checks if the client ID already exists, stores client data including id, name and email.
+# Returns clients and prints in the menu
+def register_client(clients, id_cli, name, email):
+    if id_cli in clients:
+        return clients, "Error: ID del cliente ya existe"
+    clients[id_cli] = (name, email)
+    return clients, "Cliente registrado correctamente"
+# PRODUCT REGISTRATION
+# Checks if the product ID already exists, stores product data including id, name and price
+# Returns products and prints in the menu 
+def register_product(products, id_pro, name, price):
+    if id_pro in products:
+        return products, "Error: ID de producto ya existe"
+    products[id_pro] = (id_pro, name, price)
+    return products, "Producto registrado correctamente"
 # ORDER CREATION
 # Checks if order ID exists, verifies client and product exist, validates quantity > 0
 # Gets product price, calculates total, stores order as (id_cli, id_pro, quantity, total)
